@@ -59,6 +59,7 @@
     <Compile Include="Services\DebugEngineGuids.cs" />
     <Compile Include="Services\NLogService.cs" />
     <Compile Include="Views\BaseViewModel.cs" />
+    <Compile Include="Views\OptionsModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="source.extension.vsixmanifest">
