@@ -1,6 +1,9 @@
 ﻿using System;
+using System.ComponentModel.Design;
 using System.Runtime.InteropServices;
 using System.Threading;
+using LocalMonoDebugger.Config;
+using LocalMonoDebugger.Services;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Task = System.Threading.Tasks.Task;
@@ -38,6 +41,8 @@ namespace LocalMonoDebugger
 
         #region Package Members
 
+        private Commands commands;
+
         /// <summary>
         /// Initialization of the package; this method is called right after the package is sited, so this is the place
         /// where you can put all the initialization code that rely on services provided by VisualStudio.
@@ -47,11 +52,17 @@ namespace LocalMonoDebugger
         /// <returns>A task representing the async work of package initialization, or an already completed task if there is none. Do not return null from this method.</returns>
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
+            NLogService.Setup($"{nameof(LocalMonoDebuggerPackage)}.log");
+
             // When initialized asynchronously, the current thread may be a background thread at this point.
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
-            await OpenDebugOptions.InitializeAsync(this);
 
+            var menuCommandService = await GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
+
+            OptionsManager.Initialize(this);
+
+            commands = new Commands(this, menuCommandService);
         }
 
         #endregion

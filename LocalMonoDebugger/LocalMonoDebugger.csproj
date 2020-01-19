@@ -45,6 +45,8 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Commands.cs" />
+    <Compile Include="Commands.Impl.cs" />
     <Compile Include="Config\DebugOptions.cs" />
     <Compile Include="Config\OptionsContainer.cs" />
     <Compile Include="Config\OptionsManager.cs" />
@@ -54,7 +56,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>MonoDebug.resx</DependentUpon>
     </Compile>
-    <Compile Include="OpenDebugOptions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="LocalMonoDebuggerPackage.cs" />
     <Compile Include="Services\DebugEngineGuids.cs" />
