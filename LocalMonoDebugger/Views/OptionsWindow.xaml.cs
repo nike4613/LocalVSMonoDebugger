@@ -30,11 +30,28 @@ namespace LocalMonoDebugger.Views
 
         private void Clone(object source, EventArgs args)
         {
-
+            throw new NotImplementedException();
         }
         private void Delete(object source, EventArgs args)
         {
+            throw new NotImplementedException();
+        }
 
+        private void Save(object source, EventArgs args)
+        {
+            throw new NotImplementedException();
+        }
+        private void Cancel(object source, EventArgs args)
+        {
+            throw new NotImplementedException();
+        }
+        private void SaveAs(object source, EventArgs args)
+        {
+            throw new NotImplementedException();
+        }
+        private void LoadFrom(object source, EventArgs args)
+        {
+            throw new NotImplementedException();
         }
     }
 }
