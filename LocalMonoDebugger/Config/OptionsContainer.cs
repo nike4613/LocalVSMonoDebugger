@@ -28,6 +28,7 @@ namespace LocalMonoDebugger.Config
             {
                 _selectedName = value;
                 NotifyPropertyChanged();
+                NotifyPropertyChanged(nameof(Current));
             }
         }
 
@@ -52,7 +53,7 @@ namespace LocalMonoDebugger.Config
             get
             {
                 if (_current == null || _current.AppName != SelectedName)
-                    _current = Profiles?.FirstOrDefault(x => x.AppName == SelectedName) ?? new DebugOptions();
+                    _current = Profiles?.FirstOrDefault(x => x.AppName == SelectedName) ?? new DebugOptions(this);
                 return _current;
             }
         }
@@ -62,7 +63,7 @@ namespace LocalMonoDebugger.Config
             if (instance.Profiles == null)
                 instance.Profiles = new ObservableCollection<DebugOptions>();
             if (instance.Profiles.Count < 1)
-                instance.Profiles.Add(new DebugOptions());
+                instance.Profiles.Add(new DebugOptions(instance));
             if (string.IsNullOrWhiteSpace(instance.SelectedName) || !instance.Profiles.Any(x => x.AppName == instance.SelectedName))
                 instance.SelectedName = instance.Profiles.First().AppName;
             foreach (var deviceConnection in instance.Profiles)

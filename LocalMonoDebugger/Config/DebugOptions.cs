@@ -11,6 +11,12 @@ namespace LocalMonoDebugger.Config
 {
     public class DebugOptions : BaseViewModel
     {
+        private readonly OptionsContainer _container;
+        internal DebugOptions(OptionsContainer container)
+        {
+            _container = container;
+        }
+
         public static DebugOptions DeserializeFromJson(string j)
             => JsonConvert.DeserializeObject<DebugOptions>(j);
         public string SerializeToJson()
@@ -22,6 +28,8 @@ namespace LocalMonoDebugger.Config
             get => _appName;
             set 
             {
+                if (_container.Profiles.Any(p => p != this && p.AppName == value))
+                    throw new InvalidOperationException("Another profile of the same name exists");
                 _appName = value;
                 NotifyPropertyChanged();
             }
@@ -39,7 +47,6 @@ namespace LocalMonoDebugger.Config
                 NotifyPropertyChanged(nameof(HostIPAddress));
             }
         }
-
 
         private IPAddress _hostIpAddress = null;
         [JsonIgnore]
