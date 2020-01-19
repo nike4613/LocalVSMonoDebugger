@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{DF69EC58-47DD-4741-B7A3-9E1876016429}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Mono.Debugging.VisualStudio</RootNamespace>
+    <AssemblyName>Mono.Debugging.VisualStudio.Vsix</AssemblyName>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="EnvDTE" />
+    <Reference Include="ICSharpCode.NRefactory">
+      <HintPath>..\..\..\VSMonoDebugger\Mono.Debugging.VisualStudio.4.9.10-pre\ICSharpCode.NRefactory.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.NRefactory.Cecil">
+      <HintPath>..\..\..\VSMonoDebugger\Mono.Debugging.VisualStudio.4.9.10-pre\ICSharpCode.NRefactory.Cecil.dll</HintPath>
+    </Reference>
+    <Reference Include="ICSharpCode.NRefactory.CSharp">
+      <HintPath>..\..\..\VSMonoDebugger\Mono.Debugging.VisualStudio.4.9.10-pre\ICSharpCode.NRefactory.CSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.ComponentModelHost" />
+    <Reference Include="Microsoft.VisualStudio.Debugger.InteropA" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Immutable.10.0" />
+    <Reference Include="Mono.Debugger.Soft">
+      <HintPath>..\..\..\VSMonoDebugger\Mono.Debugging.VisualStudio.4.9.10-pre\Mono.Debugger.Soft.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Debugging">
+      <HintPath>..\..\..\VSMonoDebugger\Mono.Debugging.VisualStudio.4.9.10-pre\Mono.Debugging.dll</HintPath>
+    </Reference>
+    <Reference Include="Mono.Debugging.Soft">
+      <HintPath>..\..\..\VSMonoDebugger\Mono.Debugging.VisualStudio.4.9.10-pre\Mono.Debugging.Soft.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Collections.Immutable" />
+    <Reference Include="System.ComponentModel.Composition" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Diagnostics.Tracer">
+      <HintPath>..\..\..\VSMonoDebugger\Mono.Debugging.VisualStudio.4.9.10-pre\System.Diagnostics.Tracer.dll</HintPath>
+    </Reference>
+    <Reference Include="VSLangProj" />
+  </ItemGroup>
+  <ItemGroup>
+    <AppDesigner Include="Properties\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AD7BoundBreakpoint.cs" />
+    <Compile Include="AD7BoundBreakpointsEnum.cs" />
+    <Compile Include="AD7BreakpointResolution.cs" />
+    <Compile Include="AD7CodeContextEnum.cs" />
+    <Compile Include="AD7DebugExceptionEvent.cs" />
+    <Compile Include="AD7DocumentContext.cs" />
+    <Compile Include="AD7Enum.cs" />
+    <Compile Include="AD7ErrorBreakpointsEnum.cs" />
+    <Compile Include="AD7FrameInfoEnum.cs" />
+    <Compile Include="AD7MemoryAddress.cs" />
+    <Compile Include="AD7Module.cs" />
+    <Compile Include="AD7ModuleEnum.cs" />
+    <Compile Include="AD7ProgramEnum.cs" />
+    <Compile Include="AD7PropertyEnum.cs" />
+    <Compile Include="AD7PropertyInfoEnum.cs" />
+    <Compile Include="AD7ThreadEnum.cs" />
+    <Compile Include="AsyncProcessEvent.cs" />
+    <Compile Include="BreakpointBoundEvent.cs" />
+    <Compile Include="BreakpointErrorEvent.cs" />
+    <Compile Include="BreakpointEvent.cs" />
+    <Compile Include="BreakpointsAdapter.cs" />
+    <Compile Include="BreakpointUnboundEvent.cs" />
+    <Compile Include="ComponentException.cs" />
+    <Compile Include="Engine.cs" />
+    <Compile Include="EngineCreateEvent.cs" />
+    <Compile Include="EngineEvent.cs" />
+    <Compile Include="EnvDTEProjectExtensions.cs" />
+    <Compile Include="ErrorBreakpoint.cs" />
+    <Compile Include="ErrorBreakpointResolution.cs" />
+    <Compile Include="ErrorEvent.cs" />
+    <Compile Include="Event.cs" />
+    <Compile Include="EventSender.cs" />
+    <Compile Include="ExceptionInfo.cs" />
+    <Compile Include="ExceptionsAdapter.cs" />
+    <Compile Include="ExceptionState.cs" />
+    <Compile Include="ExpressionEvaluationCompleteEvent.cs" />
+    <Compile Include="ExpressionResolver.cs" />
+    <Compile Include="IBreakpointsAdapter.cs" />
+    <Compile Include="IEventSender.cs" />
+    <Compile Include="IExpressionResolver.cs" />
+    <Compile Include="IThreadingAdapter.cs" />
+    <Compile Include="LoadCompleteEvent.cs" />
+    <Compile Include="MonoDebuggingPackage.cs" />
+    <Compile Include="NrefactoryExpressionResolver.cs" />
+    <Compile Include="ParsedDocument.cs" />
+    <Compile Include="PendingBreakpoint.cs" />
+    <Compile Include="PendingBreakpointRequest.cs" />
+    <Compile Include="Port.cs" />
+    <Compile Include="PortEvent.cs" />
+    <Compile Include="PortProgramCreateEvent.cs" />
+    <Compile Include="PortProgramDestroyEvent.cs" />
+    <Compile Include="PortSupplier.cs" />
+    <Compile Include="Process.cs" />
+    <Compile Include="ProcessCreateEvent.cs" />
+    <Compile Include="ProcessDestroyEvent.cs" />
+    <Compile Include="ProcessEvent.cs" />
+    <Compile Include="ProgramCreateEvent.cs" />
+    <Compile Include="ProgramDestroyEvent.cs" />
+    <Compile Include="ProjectDocument.cs" />
+    <Compile Include="ProjectVisualStudio.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RegisterMonoDebuggerAttribute.cs" />
+    <Compile Include="RoslynExpressionResolver.cs" />
+    <Compile Include="SourceLocation.cs" />
+    <Compile Include="SourceRange.cs" />
+    <Compile Include="StackFrame.cs" />
+    <Compile Include="StepCompleteEvent.cs" />
+    <Compile Include="StoppingEvent.cs" />
+    <Compile Include="SynchronousEngineEvent.cs" />
+    <Compile Include="TargetAddress.cs" />
+    <Compile Include="ThisAssembly.cs" />
+    <Compile Include="Thread.cs" />
+    <Compile Include="ThreadCreateEvent.cs" />
+    <Compile Include="ThreadDestroyEvent.cs" />
+    <Compile Include="ThreadEvent.cs" />
+    <Compile Include="TypeResolverAdapter.cs" />
+    <Compile Include="Utils.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="VSPackage.resources" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Mono.Debugging.VisualStudio\Mono.Debugging.VisualStudio.csproj">
+      <Project>{df69ec58-47dd-4741-b7a3-9e1876016428}</Project>
+      <Name>Mono.Debugging.VisualStudio</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Clide">
+      <Version>4.0.12</Version>
+    </PackageReference>
+    <PackageReference Include="EnvDTE">
+      <Version>8.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp">
+      <Version>3.4.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.CodeAnalysis.Workspaces.Common">
+      <Version>3.4.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Shell.15.0">
+      <Version>16.4.29519.181</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.VisualStudio.Shell.Interop">
+      <Version>7.10.6072</Version>
+    </PackageReference>
+    <PackageReference Include="Mono.Cecil">
+      <Version>0.11.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
