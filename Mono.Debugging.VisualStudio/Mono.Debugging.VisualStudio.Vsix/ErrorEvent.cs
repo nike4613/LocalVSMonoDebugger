@@ -20,7 +20,7 @@ namespace Mono.Debugging.VisualStudio
 		// Token: 0x060000A3 RID: 163 RVA: 0x000039B9 File Offset: 0x00001BB9
 		public int GetErrorMessage(enum_MESSAGETYPE[] message_type, out string format, out int reason, out uint severity, out string helper_filename, out uint helper_id)
 		{
-			message_type[0] = 2;
+			message_type[0] = enum_MESSAGETYPE.MT_MESSAGEBOX;
 			format = this.errorMessage;
 			reason = 0;
 			severity = 16U;

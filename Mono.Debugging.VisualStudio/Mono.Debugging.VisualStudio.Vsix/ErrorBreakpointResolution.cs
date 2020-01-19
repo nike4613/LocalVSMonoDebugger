@@ -16,30 +16,27 @@ namespace Mono.Debugging.VisualStudio
 		// Token: 0x0600012A RID: 298 RVA: 0x00002F7E File Offset: 0x0000117E
 		public int GetBreakpointType(enum_BP_TYPE[] type)
 		{
-			type[0] = 1;
+			type[0] = enum_BP_TYPE.BPT_CODE;
 			return 0;
 		}
 
 		// Token: 0x0600012B RID: 299 RVA: 0x0000558C File Offset: 0x0000378C
 		public int GetResolutionInfo(enum_BPERESI_FIELDS fields, BP_ERROR_RESOLUTION_INFO[] info)
 		{
-			if ((fields & 2) != null)
+			if ((fields & enum_BPERESI_FIELDS.BPERESI_PROGRAM) != 0)
 			{
 				info[0].pProgram = this.process;
-				int num = 0;
-				info[num].dwFields = (info[num].dwFields | 2);
+				info[0].dwFields |= enum_BPERESI_FIELDS.BPERESI_PROGRAM;
 			}
-			if ((fields & 8) != null)
+			if ((fields & enum_BPERESI_FIELDS.BPERESI_MESSAGE) != 0)
 			{
 				info[0].bstrMessage = this.message;
-				int num2 = 0;
-				info[num2].dwFields = (info[num2].dwFields | 8);
+				info[0].dwFields |= enum_BPERESI_FIELDS.BPERESI_MESSAGE;
 			}
-			if ((fields & 16) != null)
+			if ((fields & enum_BPERESI_FIELDS.BPERESI_TYPE) != 0)
 			{
-				info[0].dwType = 117440514;
-				int num3 = 0;
-				info[num3].dwFields = (info[num3].dwFields | 16);
+				info[0].dwType = enum_BP_ERROR_TYPE.BPET_GENERAL_ERROR;
+				info[0].dwFields |= enum_BPERESI_FIELDS.BPERESI_TYPE;
 			}
 			return 0;
 		}

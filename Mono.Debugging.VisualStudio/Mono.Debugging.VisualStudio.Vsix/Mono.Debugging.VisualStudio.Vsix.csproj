@@ -32,16 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EnvDTE" />
-    <Reference Include="ICSharpCode.NRefactory">
-      <HintPath>..\..\..\VSMonoDebugger\Mono.Debugging.VisualStudio.4.9.10-pre\ICSharpCode.NRefactory.dll</HintPath>
-    </Reference>
-    <Reference Include="ICSharpCode.NRefactory.Cecil">
-      <HintPath>..\..\..\VSMonoDebugger\Mono.Debugging.VisualStudio.4.9.10-pre\ICSharpCode.NRefactory.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="ICSharpCode.NRefactory.CSharp">
-      <HintPath>..\..\..\VSMonoDebugger\Mono.Debugging.VisualStudio.4.9.10-pre\ICSharpCode.NRefactory.CSharp.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualStudio.ComponentModelHost" />
     <Reference Include="Microsoft.VisualStudio.Debugger.InteropA" />
     <Reference Include="Microsoft.VisualStudio.Shell.Immutable.10.0" />
@@ -58,9 +48,6 @@
     <Reference Include="System.Collections.Immutable" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Diagnostics.Tracer">
-      <HintPath>..\..\..\VSMonoDebugger\Mono.Debugging.VisualStudio.4.9.10-pre\System.Diagnostics.Tracer.dll</HintPath>
-    </Reference>
     <Reference Include="VSLangProj" />
   </ItemGroup>
   <ItemGroup>
@@ -156,10 +143,13 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Clide">
-      <Version>4.0.12</Version>
+      <Version>2.5.11</Version>
     </PackageReference>
     <PackageReference Include="EnvDTE">
       <Version>8.0.2</Version>
+    </PackageReference>
+    <PackageReference Include="ICSharpCode.NRefactory">
+      <Version>5.5.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp">
       <Version>3.4.0</Version>
@@ -175,6 +165,9 @@
     </PackageReference>
     <PackageReference Include="Mono.Cecil">
       <Version>0.11.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Diagnostics.Tracer">
+      <Version>2.0.8</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

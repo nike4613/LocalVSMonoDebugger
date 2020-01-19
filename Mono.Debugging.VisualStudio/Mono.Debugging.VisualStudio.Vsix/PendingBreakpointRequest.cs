@@ -11,7 +11,7 @@ namespace Mono.Debugging.VisualStudio
 		{
 			this.Request = request;
 			BP_REQUEST_INFO[] array = new BP_REQUEST_INFO[1];
-			Utils.RequireOk(request.GetRequestInfo(193, array));
+			Utils.RequireOk(request.GetRequestInfo(enum_BPREQI_FIELDS.BPREQI_CONDITION|enum_BPREQI_FIELDS.BPREQI_PASSCOUNT|enum_BPREQI_FIELDS.BPREQI_BPLOCATION, array));
 			this.RequestInfo = array[0];
 			enum_BP_LOCATION_TYPE[] array2 = new enum_BP_LOCATION_TYPE[1];
 			Utils.RequireOk(request.GetLocationType(array2));

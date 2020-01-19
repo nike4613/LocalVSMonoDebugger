@@ -293,19 +293,19 @@ namespace Mono.Debugging.VisualStudio
 		public int Step(IDebugThread2 t, enum_STEPKIND u_kind, enum_STEPUNIT u_step)
 		{
 			Thread thread = (Thread)t;
-			if (u_step == 2)
+			if (u_step == enum_STEPUNIT.STEP_INSTRUCTION)
 			{
-				Utils.Message("STEP INSTRUCTION !", new object[0]);
+				Utils.Message("STEP INSTRUCTION !");
 			}
 			switch (u_kind)
 			{
-			case 0:
+			case enum_STEPKIND.STEP_INTO:
 				this.Session.StepLine();
 				break;
-			case 1:
+			case enum_STEPKIND.STEP_OVER:
 				this.Session.NextLine();
 				break;
-			case 2:
+			case enum_STEPKIND.STEP_OUT:
 				this.Session.Finish();
 				break;
 			default:
@@ -360,15 +360,15 @@ namespace Mono.Debugging.VisualStudio
 		public int GetInfo(enum_PROCESS_INFO_FIELDS Fields, PROCESS_INFO[] processInfo)
 		{
 			processInfo[0].Fields = Fields;
-			if (this.IsSet(Fields, 1))
+			if (this.IsSet(Fields, enum_PROCESS_INFO_FIELDS.PIF_FILE_NAME))
 			{
 				processInfo[0].bstrFileName = this.name;
 			}
-			if (this.IsSet(Fields, 2))
+			if (this.IsSet(Fields, enum_PROCESS_INFO_FIELDS.PIF_BASE_NAME))
 			{
 				processInfo[0].bstrBaseName = Path.GetFileName(this.name);
 			}
-			if (this.IsSet(Fields, 4))
+			if (this.IsSet(Fields, enum_PROCESS_INFO_FIELDS.PIF_TITLE))
 			{
 				processInfo[0].bstrTitle = Path.GetFileName(this.name);
 			}

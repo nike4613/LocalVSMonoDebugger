@@ -40,8 +40,7 @@ namespace Mono.Debugging.VisualStudio
 		// Token: 0x06000156 RID: 342 RVA: 0x00005ADC File Offset: 0x00003CDC
 		public int AddPort(IDebugPortRequest2 request, out IDebugPort2 debug_port)
 		{
-			string text;
-			Utils.RequireOk(request.GetPortName(ref text));
+			Utils.RequireOk(request.GetPortName(out var _));
 			debug_port = PortSupplier.MainPort;
 			return 0;
 		}

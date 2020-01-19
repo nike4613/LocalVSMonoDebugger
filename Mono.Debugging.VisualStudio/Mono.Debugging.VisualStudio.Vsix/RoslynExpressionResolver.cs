@@ -23,10 +23,10 @@ namespace Mono.Debugging.VisualStudio
 			Document document = this.workspace.CurrentSolution.Projects.SelectMany((Project p) => p.Documents).FirstOrDefault((Document d) => string.Equals(d.FilePath, location.FileName, StringComparison.InvariantCultureIgnoreCase));
 			if (document != null)
 			{
-				SemanticModel result = document.GetSemanticModelAsync(default(CancellationToken)).Result;
+				SemanticModel result = document.GetSemanticModelAsync().Result;
 				if (result != null)
 				{
-					IEnumerable<ITypeSymbol> source = result.LookupSymbols(document.GetTextAsync(default(CancellationToken)).Result.Lines[location.Line - 1].Start + location.Column - 1, null, identifier, false).OfType<ITypeSymbol>();
+					IEnumerable<ITypeSymbol> source = result.LookupSymbols(document.GetTextAsync().Result.Lines[location.Line - 1].Start + location.Column - 1, null, identifier, false).OfType<ITypeSymbol>();
 					if (source.Count<ITypeSymbol>() == 1)
 					{
 						resolvedType = source.First<ITypeSymbol>().ToDisplayString(null);

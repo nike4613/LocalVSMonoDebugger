@@ -32,11 +32,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Clide">
-      <HintPath>..\..\..\VSMonoDebugger\Mono.Debugging.VisualStudio.4.9.10-pre\Clide.dll</HintPath>
-      <EmbedInteropTypes>False</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="EnvDTE" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.VisualStudio.OLE.Interop" />
     <Reference Include="Microsoft.VisualStudio.Shell.Interop" />
@@ -50,9 +45,6 @@
       <HintPath>..\..\..\VSMonoDebugger\Mono.Debugging.VisualStudio.4.9.10-pre\Mono.Debugging.Soft.dll</HintPath>
     </Reference>
     <Reference Include="System.Core" />
-    <Reference Include="System.Diagnostics.Tracer">
-      <HintPath>..\..\..\VSMonoDebugger\Mono.Debugging.VisualStudio.4.9.10-pre\System.Diagnostics.Tracer.dll</HintPath>
-    </Reference>
     <Reference Include="VSLangProj" />
   </ItemGroup>
   <ItemGroup>
@@ -74,11 +66,20 @@
     <Compile Include="ThisAssembly.cs" />
   </ItemGroup>
   <ItemGroup>
+    <PackageReference Include="Clide">
+      <Version>2.5.11</Version>
+    </PackageReference>
+    <PackageReference Include="EnvDTE">
+      <Version>8.0.2</Version>
+    </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Shell.15.0">
       <Version>16.4.29519.181</Version>
     </PackageReference>
     <PackageReference Include="Mono.Cecil">
       <Version>0.11.1</Version>
+    </PackageReference>
+    <PackageReference Include="System.Diagnostics.Tracer">
+      <Version>2.0.8</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

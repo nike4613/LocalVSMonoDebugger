@@ -64,33 +64,32 @@ namespace Mono.Debugging.VisualStudio
 		// Token: 0x060000CE RID: 206 RVA: 0x00004100 File Offset: 0x00002300
 		protected bool DoBind()
 		{
-			if (this.Request.LocationType == 65537)
+			if (this.Request.LocationType == enum_BP_LOCATION_TYPE.BPLT_CODE_FILE_LINE)
 			{
-				if ((this.Request.RequestInfo.dwFields & 1) == null)
+				if ((this.Request.RequestInfo.dwFields & enum_BPREQI_FIELDS.BPREQI_BPLOCATION) == 0)
 				{
 					this.OnBreakpointError("Breakpoints of this type are not supported.");
 					return false;
 				}
 				IDebugDocumentPosition2 debugDocumentPosition = (IDebugDocumentPosition2)Marshal.GetObjectForIUnknown(this.Request.RequestInfo.bpLocation.unionmember2);
-				string file;
-				Utils.RequireOk(debugDocumentPosition.GetFileName(ref file));
+				Utils.RequireOk(debugDocumentPosition.GetFileName(out var file));
 				TEXT_POSITION[] array = new TEXT_POSITION[1];
 				TEXT_POSITION[] array2 = new TEXT_POSITION[1];
 				Utils.RequireOk(debugDocumentPosition.GetRange(array, array2));
 				SourceRange range = new SourceRange((int)(array[0].dwLine + 1U), (int)(array2[0].dwLine + 1U), (int)(array[0].dwColumn + 1U), (int)(array2[0].dwColumn + 1U));
 				SourceLocation location = new SourceLocation(file, (int)(array[0].dwLine + 1U), range);
-				if ((this.Request.RequestInfo.dwFields & 64) == 64)
+				if ((this.Request.RequestInfo.dwFields & enum_BPREQI_FIELDS.BPREQI_PASSCOUNT) != 0)
 				{
 					this.HitCount = (int)this.Request.RequestInfo.bpPassCount.dwPassCount;
 					switch (this.Request.RequestInfo.bpPassCount.stylePassCount)
 					{
-					case 1:
+					case enum_BP_PASSCOUNT_STYLE.BP_PASSCOUNT_EQUAL:
 						this.HitCountMode = HitCountMode.EqualTo;
 						break;
-					case 2:
+					case enum_BP_PASSCOUNT_STYLE.BP_PASSCOUNT_EQUAL_OR_GREATER:
 						this.HitCountMode = HitCountMode.GreaterThanOrEqualTo;
 						break;
-					case 3:
+					case enum_BP_PASSCOUNT_STYLE.BP_PASSCOUNT_MOD:
 						this.HitCountMode = HitCountMode.MultipleOf;
 						break;
 					default:
@@ -98,10 +97,10 @@ namespace Mono.Debugging.VisualStudio
 						break;
 					}
 				}
-				if ((this.Request.RequestInfo.dwFields & 128) == 128)
+				if ((this.Request.RequestInfo.dwFields & enum_BPREQI_FIELDS.BPREQI_CONDITION) != 0)
 				{
 					this.ConditionExpression = this.Request.RequestInfo.bpCondition.bstrCondition;
-					this.BreakIfConditionChanges = (this.Request.RequestInfo.bpCondition.styleCondition == 2);
+					this.BreakIfConditionChanges = (this.Request.RequestInfo.bpCondition.styleCondition == enum_BP_COND_STYLE.BP_COND_WHEN_CHANGED);
 				}
 				this.Handle = this.Engine.BindBreakpoint(this, location);
 				if (this.Handle == null)
@@ -113,7 +112,7 @@ namespace Mono.Debugging.VisualStudio
 			}
 			else
 			{
-				if (this.Request.LocationType == 131073)
+				if (this.Request.LocationType == enum_BP_LOCATION_TYPE.BPLT_CODE_FUNC_OFFSET)
 				{
 					this.OnBreakpointError("Function breakpoints are not supported yet.");
 					return false;
@@ -160,9 +159,9 @@ namespace Mono.Debugging.VisualStudio
 				});
 				return 1;
 			}
-			if (this.Request.LocationType == 65537)
+			if (this.Request.LocationType == enum_BP_LOCATION_TYPE.BPLT_CODE_FILE_LINE)
 			{
-				if ((this.Request.RequestInfo.dwFields & 1) == null)
+				if ((this.Request.RequestInfo.dwFields & enum_BPREQI_FIELDS.BPREQI_BPLOCATION) == 0)
 				{
 					this.error_breakpoint = new ErrorBreakpoint(this, this.process, "Breakpoints of this type are not supported.");
 					error_breakpoints = new AD7ErrorBreakpointsEnum(new IDebugErrorBreakpoint2[]
@@ -176,7 +175,7 @@ namespace Mono.Debugging.VisualStudio
 			}
 			else
 			{
-				if (this.Request.LocationType == 131073)
+				if (this.Request.LocationType == enum_BP_LOCATION_TYPE.BPLT_CODE_FUNC_OFFSET)
 				{
 					this.error_breakpoint = new ErrorBreakpoint(this, this.process, "Function breakpoints are not supported yet, see bug #673920.");
 					error_breakpoints = new AD7ErrorBreakpointsEnum(new IDebugErrorBreakpoint2[]
@@ -286,15 +285,15 @@ namespace Mono.Debugging.VisualStudio
 			enum_PENDING_BP_STATE state;
 			if (this.Handle == null)
 			{
-				state = 1;
+				state = enum_PENDING_BP_STATE.PBPS_DELETED;
 			}
 			else if (this.Handle.Enabled)
 			{
-				state = 3;
+				state = enum_PENDING_BP_STATE.PBPS_ENABLED;
 			}
 			else
 			{
-				state = 2;
+				state = enum_PENDING_BP_STATE.PBPS_DISABLED;
 			}
 			pState[0].state = state;
 			pState[0].Flags = 0;

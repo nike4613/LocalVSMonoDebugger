@@ -24,7 +24,7 @@ namespace Mono.Debugging.VisualStudio
 		{
 			try
 			{
-				ExceptionInfo exceptionInfo = this.GetExceptionInfo(args.Backtrace, null, false);
+				var exceptionInfo = this.GetExceptionInfo(args.Backtrace, null, false);
 				Thread threadFromTargetArgs = this.threading.GetThreadFromTargetArgs("OnExceptionThrown()", args);
 				this.eventSender.SendEvent(new AD7DebugExceptionEvent(threadFromTargetArgs, ExceptionsAdapter.GetExceptionMessage(exceptionInfo)));
 			}
@@ -35,7 +35,7 @@ namespace Mono.Debugging.VisualStudio
 		}
 
 		// Token: 0x06000133 RID: 307 RVA: 0x00005774 File Offset: 0x00003974
-		private static string GetExceptionMessage(ExceptionInfo ex)
+		private static string GetExceptionMessage(Client.ExceptionInfo ex)
 		{
 			if (ex != null)
 			{
@@ -45,7 +45,7 @@ namespace Mono.Debugging.VisualStudio
 		}
 
 		// Token: 0x06000134 RID: 308 RVA: 0x00005795 File Offset: 0x00003995
-		private static string GetUnhandledExceptionMessage(ExceptionInfo ex)
+		private static string GetUnhandledExceptionMessage(Client.ExceptionInfo ex)
 		{
 			if (ex != null)
 			{
@@ -55,7 +55,7 @@ namespace Mono.Debugging.VisualStudio
 		}
 
 		// Token: 0x06000135 RID: 309 RVA: 0x000057B6 File Offset: 0x000039B6
-		private static string ReplaceMessage(ExceptionInfo ex)
+		private static string ReplaceMessage(Client.ExceptionInfo ex)
 		{
 			if (!(ex.Message == "Loading..."))
 			{
@@ -71,7 +71,7 @@ namespace Mono.Debugging.VisualStudio
 			{
 				EvaluationOptions evaluationOptions = this.session.EvaluationOptions.Clone();
 				evaluationOptions.EllipsizeStrings = false;
-				ExceptionInfo exceptionInfo = this.GetExceptionInfo(args.Backtrace, evaluationOptions, true);
+				var exceptionInfo = this.GetExceptionInfo(args.Backtrace, evaluationOptions, true);
 				Thread threadFromTargetArgs = this.threading.GetThreadFromTargetArgs("OnUnhandledException()", args);
 				this.eventSender.SendEvent(new AD7DebugExceptionEvent(threadFromTargetArgs, ExceptionsAdapter.GetUnhandledExceptionMessage(exceptionInfo)));
 			}
@@ -82,11 +82,11 @@ namespace Mono.Debugging.VisualStudio
 		}
 
 		// Token: 0x06000137 RID: 311 RVA: 0x0000584C File Offset: 0x00003A4C
-		private static ExceptionInfo GetException(TargetEventArgs args, EvaluationOptions options)
+		private static Client.ExceptionInfo GetException(TargetEventArgs args, EvaluationOptions options)
 		{
 			for (int i = 0; i < args.Backtrace.FrameCount; i++)
 			{
-				ExceptionInfo exception = args.Backtrace.GetFrame(i).GetException(options);
+				var exception = args.Backtrace.GetFrame(i).GetException(options);
 				if (exception != null)
 				{
 					return exception;
@@ -96,9 +96,9 @@ namespace Mono.Debugging.VisualStudio
 		}
 
 		// Token: 0x06000138 RID: 312 RVA: 0x00005888 File Offset: 0x00003A88
-		private ExceptionInfo GetExceptionInfo(Backtrace backTrace, EvaluationOptions options = null, bool isUnhandled = false)
+		private Client.ExceptionInfo GetExceptionInfo(Backtrace backTrace, EvaluationOptions options = null, bool isUnhandled = false)
 		{
-			ExceptionInfo exceptionInfo = null;
+			Client.ExceptionInfo exceptionInfo = null;
 			if (backTrace != null && backTrace.FrameCount > 0)
 			{
 				for (int i = 0; i < backTrace.FrameCount; i++)
@@ -127,7 +127,7 @@ namespace Mono.Debugging.VisualStudio
 		}
 
 		// Token: 0x06000139 RID: 313 RVA: 0x00005900 File Offset: 0x00003B00
-		private void ResolveFullException(ExceptionInfo exception)
+		private void ResolveFullException(Client.ExceptionInfo exception)
 		{
 			int num = 0;
 			if (exception.Instance != null)

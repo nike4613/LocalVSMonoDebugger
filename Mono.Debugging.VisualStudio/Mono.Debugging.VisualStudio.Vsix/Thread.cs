@@ -65,7 +65,7 @@ namespace Mono.Debugging.VisualStudio
 			{
 				return null;
 			}
-			StackFrame frame = backtrace.GetFrame(0);
+			var frame = backtrace.GetFrame(0);
 			if (frame == null)
 			{
 				return null;
@@ -141,7 +141,7 @@ namespace Mono.Debugging.VisualStudio
 				return 1;
 			}
 			List<FRAMEINFO> list = new List<FRAMEINFO>();
-			if ((dwFieldSpec & 536870912) != null)
+			if ((dwFieldSpec & enum_FRAMEINFO_FLAGS.FIF_FILTER_NON_USER_CODE) != null)
 			{
 				bool flag = false;
 				for (int i = 0; i < backtrace.Length; i++)
@@ -180,12 +180,12 @@ namespace Mono.Debugging.VisualStudio
 		{
 			FRAMEINFO result = default(FRAMEINFO);
 			result.m_bstrFuncName = "[External Code]";
-			result.m_dwValidFields |= 1;
+			result.m_dwValidFields |= enum_FRAMEINFO_FLAGS.FIF_FUNCNAME;
 			result.m_fHasDebugInfo = 0;
-			result.m_dwValidFields |= 128;
+			result.m_dwValidFields |= enum_FRAMEINFO_FLAGS.FIF_DEBUGINFO;
 			result.m_fStaleCode = 0;
-			result.m_dwValidFields |= 256;
-			result.m_dwValidFields |= 512;
+			result.m_dwValidFields |= enum_FRAMEINFO_FLAGS.FIF_STALECODE;
+			result.m_dwValidFields |= enum_FRAMEINFO_FLAGS.FIF_FLAGS;
 			result.m_dwFlags = 0U;
 			result.m_dwFlags |= 2U;
 			result.m_dwFlags |= 1U;
@@ -229,35 +229,31 @@ namespace Mono.Debugging.VisualStudio
 		public int GetThreadProperties(enum_THREADPROPERTY_FIELDS fields, THREADPROPERTIES[] tp)
 		{
 			tp[0].dwFields = 0;
-			if ((fields & 1) != null)
+			if ((fields & enum_THREADPROPERTY_FIELDS.TPF_ID) != 0)
 			{
 				tp[0].dwThreadId = (uint)this.ID;
-				int num = 0;
-				tp[num].dwFields = (tp[num].dwFields | 1);
+				tp[0].dwFields |= enum_THREADPROPERTY_FIELDS.TPF_ID;
 			}
-			if ((fields & 4) != null)
+			if ((fields & enum_THREADPROPERTY_FIELDS.TPF_STATE) != 0)
 			{
 				tp[0].dwThreadState = (this.IsAlive ? 2U : 4U);
-				int num2 = 0;
-				tp[num2].dwFields = (tp[num2].dwFields | 4);
+				tp[0].dwFields |= enum_THREADPROPERTY_FIELDS.TPF_STATE;
 			}
 			if (!this.IsAlive)
 			{
 				return 0;
 			}
-			if ((fields & 16) != null)
+			if ((fields & enum_THREADPROPERTY_FIELDS.TPF_NAME) != 0)
 			{
 				tp[0].bstrName = this.GetThreadInfo().Name;
-				int num3 = 0;
-				tp[num3].dwFields = (tp[num3].dwFields | 16);
+				tp[0].dwFields |= enum_THREADPROPERTY_FIELDS.TPF_NAME;
 			}
-			if ((fields & 8) != null)
+			if ((fields & enum_THREADPROPERTY_FIELDS.TPF_PRIORITY) != 0)
 			{
 				tp[0].bstrPriority = "Normal";
-				int num4 = 0;
-				tp[num4].dwFields = (tp[num4].dwFields | 8);
+				tp[0].dwFields |= enum_THREADPROPERTY_FIELDS.TPF_PRIORITY;
 			}
-			if ((fields & 32) != null)
+			if ((fields & enum_THREADPROPERTY_FIELDS.TPF_LOCATION) != 0)
 			{
 				try
 				{
@@ -265,8 +261,7 @@ namespace Mono.Debugging.VisualStudio
 					if (frame != null)
 					{
 						tp[0].bstrLocation = frame.Frame.ToString();
-						int num5 = 0;
-						tp[num5].dwFields = (tp[num5].dwFields | 32);
+						tp[0].dwFields |= enum_THREADPROPERTY_FIELDS.TPF_LOCATION;
 					}
 				}
 				catch

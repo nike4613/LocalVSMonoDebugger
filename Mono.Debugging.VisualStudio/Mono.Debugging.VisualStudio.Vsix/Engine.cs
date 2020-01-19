@@ -37,7 +37,7 @@ namespace Mono.Debugging.VisualStudio
 		// Token: 0x0600004C RID: 76 RVA: 0x00003104 File Offset: 0x00001304
 		public int Attach(IDebugProgram2[] rgpPrograms, IDebugProgramNode2[] rgpProgramNodes, uint celtPrograms, IDebugEventCallback2 pCallback, enum_ATTACH_REASON dwReason)
 		{
-			if (dwReason != 1)
+			if (dwReason != enum_ATTACH_REASON.ATTACH_REASON_USER)
 			{
 				throw new InvalidOperationException();
 			}
@@ -131,7 +131,7 @@ namespace Mono.Debugging.VisualStudio
 		// Token: 0x06000054 RID: 84 RVA: 0x00003330 File Offset: 0x00001530
 		public int SetException(EXCEPTION_INFO[] pException)
 		{
-			if ((pException[0].dwState & 1) != null)
+			if ((pException[0].dwState & enum_EXCEPTION_STATE.EXCEPTION_STOP_FIRST_CHANCE) != 0)
 			{
 				using (List<Process>.Enumerator enumerator = this.processes.GetEnumerator())
 				{
