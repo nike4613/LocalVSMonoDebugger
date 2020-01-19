@@ -28,6 +28,7 @@ namespace LocalMonoDebugger
     [InstalledProductRegistration("#110", "#112", "1.0")]
     [Guid(LocalMonoDebuggerPackage.PackageGuidString)]
     [ProvideAutoLoad(UIContextGuids80.SolutionExists, PackageAutoLoadFlags.BackgroundLoad)]
+    [ProvideMenuResource("Menus.ctmenu", 1)]
     public sealed class LocalMonoDebuggerPackage : AsyncPackage
     {
         /// <summary>
@@ -49,6 +50,8 @@ namespace LocalMonoDebugger
             // When initialized asynchronously, the current thread may be a background thread at this point.
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
+            await OpenDebugOptions.InitializeAsync(this);
+
         }
 
         #endregion
