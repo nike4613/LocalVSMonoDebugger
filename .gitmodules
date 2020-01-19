@@ -1,3 +1,6 @@
 [submodule "debugger-libs"]
 	path = debugger-libs
 	url = git@github.com:mono/debugger-libs.git
+[submodule "NRefactory"]
+	path = NRefactory
+	url = git@github.com:icsharpcode/NRefactory.git
