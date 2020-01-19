@@ -57,7 +57,8 @@ namespace LocalMonoDebugger.Config
                 return hostIp;
         }
 
-        private int _debugPort = 5000;
+        public const int DefaultDebugPort = 5000;
+        private int _debugPort = DefaultDebugPort;
         public int DebugPort 
         {
             get => _debugPort;

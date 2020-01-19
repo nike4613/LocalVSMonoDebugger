@@ -46,6 +46,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Config\DebugOptions.cs" />
+    <Compile Include="Config\OptionsContainer.cs" />
     <Compile Include="Mono.Debugging.VisualStudo\MonoEngine.cs" />
     <Compile Include="MonoDebug.Designer.cs">
       <AutoGen>True</AutoGen>
