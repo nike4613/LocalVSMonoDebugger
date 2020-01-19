@@ -35,17 +35,7 @@
     <Reference Include="Microsoft.VisualStudio.ComponentModelHost" />
     <Reference Include="Microsoft.VisualStudio.Debugger.InteropA" />
     <Reference Include="Microsoft.VisualStudio.Shell.Immutable.10.0" />
-    <Reference Include="Mono.Debugger.Soft">
-      <HintPath>..\..\..\VSMonoDebugger\Mono.Debugging.VisualStudio.4.9.10-pre\Mono.Debugger.Soft.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Debugging">
-      <HintPath>..\..\..\VSMonoDebugger\Mono.Debugging.VisualStudio.4.9.10-pre\Mono.Debugging.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Debugging.Soft">
-      <HintPath>..\..\..\VSMonoDebugger\Mono.Debugging.VisualStudio.4.9.10-pre\Mono.Debugging.Soft.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Collections.Immutable" />
     <Reference Include="System.ComponentModel.Composition" />
     <Reference Include="System.Core" />
     <Reference Include="VSLangProj" />
@@ -136,6 +126,18 @@
     <EmbeddedResource Include="VSPackage.resources" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\debugger-libs\Mono.Debugger.Soft\Mono.Debugger.Soft.csproj">
+      <Project>{372e8e3e-29d5-4b4d-88a2-4711cd628c4e}</Project>
+      <Name>Mono.Debugger.Soft</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\debugger-libs\Mono.Debugging.Soft\Mono.Debugging.Soft.csproj">
+      <Project>{de40756e-57f6-4af2-b155-55e3a88cced8}</Project>
+      <Name>Mono.Debugging.Soft</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\debugger-libs\Mono.Debugging\Mono.Debugging.csproj">
+      <Project>{90c99adb-7d4b-4eb4-98c2-40bd1b14c7d2}</Project>
+      <Name>Mono.Debugging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Mono.Debugging.VisualStudio\Mono.Debugging.VisualStudio.csproj">
       <Project>{df69ec58-47dd-4741-b7a3-9e1876016428}</Project>
       <Name>Mono.Debugging.VisualStudio</Name>
