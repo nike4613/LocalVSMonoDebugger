@@ -19,6 +19,11 @@ namespace LocalMonoDebugger.Config
         }
         public string SerializeToJson()
             => JsonConvert.SerializeObject(this);
+        
+        public OptionsContainer()
+        {
+            Validate(this);
+        }
 
         private string _selectedName;
         public string SelectedName

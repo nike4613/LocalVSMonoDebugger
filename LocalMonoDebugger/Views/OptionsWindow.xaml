@@ -63,7 +63,7 @@
                 </Grid.RowDefinitions>
 
                 <TextBlock Grid.Row="0" Grid.Column="0" Text="Profile Name:" Style="{StaticResource Label}"/>
-                <TextBox Grid.Row="0" Grid.Column="1" Margin="5" Style="{StaticResource ValidatedTextBox}">
+                <TextBox Grid.Row="0" Grid.Column="1" Margin="5" Style="{StaticResource ValidatedTextBox}" TextAlignment="Right">
                     <TextBox.Text>
                         <Binding Path="Container.Current.AppName" Mode="TwoWay">
                             <Binding.ValidationRules>
@@ -74,7 +74,7 @@
                 </TextBox>
 
                 <TextBlock Grid.Row="1" Grid.Column="0" Text="Host Address:" Style="{StaticResource Label}"/>
-                <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Style="{StaticResource ValidatedTextBox}">
+                <TextBox Grid.Row="1" Grid.Column="1" Margin="5" Style="{StaticResource ValidatedTextBox}" TextAlignment="Right">
                     <TextBox.Text>
                         <Binding Path="Container.Current.HostAddress" Mode="TwoWay">
                             <Binding.ValidationRules>
@@ -90,11 +90,11 @@
                 <TextBlock Grid.Row="3" Grid.Column="0" Text="Run as Server:" Style="{StaticResource Label}"/>
                 <CheckBox Grid.Row="3" Grid.Column="1" Margin="5" IsChecked="{Binding Container.Current.RunAsDebugServer}"/>
 
-                <TextBlock Grid.Row="4" Grid.Column="0" Text="Time Between Connection Attempts:" Style="{StaticResource Label}"/>
+                <TextBlock Grid.Row="4" Grid.Column="0" Text="Time Between Connection Attempts (milliseconds):" Style="{StaticResource Label}"/>
                 <xctk:UIntegerUpDown Grid.Row="4" Grid.Column="1" Margin="5" Value="{Binding Container.Current.TimeBetweenConnectionAttemptsMs}"/>
                 
                 <TextBlock Grid.Row="5" Grid.Column="0" Text="Max Connection Attempts:" Style="{StaticResource Label}"/>
-                <xctk:UIntegerUpDown Grid.Row="5" Grid.Column="1" Margin="5" Value="{Binding Container.Current.MaxConnectionAttempts}" Minimum="1"/>
+                <xctk:UIntegerUpDown Grid.Row="5" Grid.Column="1" Margin="5" Value="{Binding Container.Current.MaxConnectionAttempts}" Minimum="1" Name="UintUpDownConn"/>
             </Grid>
         </Border>
         <Grid Grid.Row="2">

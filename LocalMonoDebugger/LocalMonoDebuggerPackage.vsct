@@ -68,7 +68,7 @@
         <Parent guid="guidLocalMonoDebuggerPackageCmdSet" id="MonoDebugMenuGroup" />
         <Icon guid="guidImages" id="bmpPicSearch" />
         <Strings>
-          <ButtonText>Invoke OpenDebugOption</ButtonText>
+          <ButtonText>Options</ButtonText>
         </Strings>
       </Button>
     </Buttons>

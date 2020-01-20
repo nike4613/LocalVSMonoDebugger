@@ -1,4 +1,7 @@
 ﻿using LocalMonoDebugger.Config;
+using LocalMonoDebugger.Views;
+using Microsoft;
+using Microsoft.Internal.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
@@ -25,20 +28,25 @@ namespace LocalMonoDebugger
             AddMenuItem(commandService, Ids.CmdOpenOptions, null, OpenOptionsClicked);
         }
 
-        private void OpenOptionsClicked(object sender, EventArgs e)
+        private async void OpenOptionsClicked(object sender, EventArgs e)
         {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            string title = "OpenDebugOption";
+            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
 
-            // Show a message box to prove we were here
-            VsShellUtilities.ShowMessageBox(
-                package,
-                message,
-                title,
-                OLEMSGICON.OLEMSGICON_INFO,
-                OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+            // https://docs.microsoft.com/en-us/visualstudio/extensibility/creating-and-managing-modal-dialog-boxes?view=vs-2019
+            var vsUIShell = await package.GetServiceAsync(typeof(SVsUIShell)) as IVsUIShell;
+            Assumes.Present(vsUIShell);
+
+            var dlg = new OptionsWindow();
+            vsUIShell.GetDialogOwnerHwnd(out IntPtr vsParentHwnd);
+            vsUIShell.EnableModeless(0);
+            try
+            {
+                WindowHelper.ShowModal(dlg, vsParentHwnd);
+            }
+            finally
+            {
+                vsUIShell.EnableModeless(1);
+            }
         }
 
         private void SetCommandText(object sender, EventArgs e)

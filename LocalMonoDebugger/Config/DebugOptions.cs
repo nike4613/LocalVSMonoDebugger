@@ -28,9 +28,9 @@ namespace LocalMonoDebugger.Config
             get => _appName;
             set 
             {
-                if (_container.Profiles.Any(p => p != this && p.AppName == value))
+                if (_container.Profiles.Any(p => p != this && p.AppName == value.Trim()))
                     throw new InvalidOperationException("Another profile of the same name exists");
-                _appName = value;
+                _appName = value.Trim();
                 NotifyPropertyChanged();
             }
         }
@@ -42,7 +42,7 @@ namespace LocalMonoDebugger.Config
             set
             {
                 _hostIpAddress = null;
-                _hostAddress = value;
+                _hostAddress = value.Trim();
                 NotifyPropertyChanged();
                 NotifyPropertyChanged(nameof(HostIPAddress));
             }
