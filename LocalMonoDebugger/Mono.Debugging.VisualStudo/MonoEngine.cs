@@ -12,8 +12,8 @@ using LocalMonoDebugger.Config;
 
 namespace Mono.Debugging.VisualStudio
 {
-    [Guid(DebugEngineGuids.XamarinEngineString)]
-    public class XamarinEngine : IDebugEngine2, IDebugEngineLaunch2
+    [Guid(DebugEngineGuids.MonoEngineString)]
+    public class MonoEngine : IDebugEngine2, IDebugEngineLaunch2
     {
         protected Engine _engine;
 
@@ -22,7 +22,7 @@ namespace Mono.Debugging.VisualStudio
 
         public static Project StartupProject { set; get; }
 
-        public XamarinEngine()
+        public MonoEngine()
         {
             _engine = new Engine();
         }
@@ -213,7 +213,7 @@ namespace Mono.Debugging.VisualStudio
         {
             NLogService.TraceEnteringMethod();
             var temp = _engine.GetEngineId(out pguidEngine);
-            pguidEngine = new Guid(DebugEngineGuids.XamarinEngineString);
+            pguidEngine = new Guid(DebugEngineGuids.MonoEngineString);
             return 0;
         }
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.Shell;
+﻿using LocalMonoDebugger.Services;
+using Microsoft.VisualStudio.Shell;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Design;
@@ -28,15 +29,17 @@ namespace LocalMonoDebugger
         /// VS Package that provides this command, not null.
         /// </summary>
         private readonly AsyncPackage package;
+        private readonly MonoVSExtension monoExtension;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VSMonoDebuggerCommands"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="asyncServiceProvider">Owner package, not null.</param>
-        public Commands(AsyncPackage asyncServiceProvider, OleMenuCommandService menuCommandService)
+        public Commands(AsyncPackage asyncServiceProvider, OleMenuCommandService menuCommandService, MonoVSExtension monoExt)
         {
             package = asyncServiceProvider ?? throw new ArgumentNullException(nameof(asyncServiceProvider));
+            monoExtension = monoExt ?? throw new ArgumentNullException(nameof(monoExt));
 
             InstallMenu(menuCommandService);
         }

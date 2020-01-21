@@ -13,13 +13,9 @@ namespace LocalMonoDebugger.Services
     {
         public readonly static EngineType UseAD7Engine = EngineType.XamarinEngine;
 
-        //public const string MonoEngineString = "D78CF801-CE2A-499B-BF1F-C81742877A34";
-        public const string AD7EngineString = "8BF3AB9F-3864-449A-93AB-E7B0935FC8F5";
-        public const string XamarinEngineString = "9E1626AE-7DB7-4138-AC41-641D55CF9A4A";
+        public const string MonoEngineString = "CEFEF24F-C07D-4CB6-8F6B-33316F26B01D";
 
-        //public const string MonoProgramProviderString = "00171DED-5920-4ACD-93C2-BD9E4FA10CA0";
-        public const string AD7ProgramProviderString = "CA171DED-5920-4ACD-93C2-BD9E4FA10CA0";
-        public const string XamarinProgramProviderString = "B8291DF6-D514-4D91-8BE3-476FF244EFA9";
+        public const string MonoProgramProviderString = "5C3DC3E2-2E0A-40D5-9578-275366C82722";
 
         public const string EngineName = "VSMonoDebugger";
 
@@ -34,7 +30,7 @@ namespace LocalMonoDebugger.Services
                     //case EngineType.MonoEngine:
                     //    return new Guid(MonoProgramProviderString);
                     case EngineType.XamarinEngine:
-                        return new Guid(XamarinProgramProviderString);
+                        return new Guid(MonoProgramProviderString);
                     default:
                         throw new NotSupportedException(UseAD7Engine.ToString());
 
@@ -52,7 +48,7 @@ namespace LocalMonoDebugger.Services
                     //case EngineType.MonoEngine:
                     //    return new Guid(MonoEngineString);
                     case EngineType.XamarinEngine:
-                        return new Guid(XamarinEngineString);
+                        return new Guid(MonoEngineString);
                     default:
                         throw new NotSupportedException(UseAD7Engine.ToString());
                 }

@@ -42,6 +42,7 @@ namespace LocalMonoDebugger
         #region Package Members
 
         private Commands commands;
+        private MonoVSExtension monoExt;
 
         /// <summary>
         /// Initialization of the package; this method is called right after the package is sited, so this is the place
@@ -58,11 +59,13 @@ namespace LocalMonoDebugger
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
 
+            var dte = await GetServiceAsync(typeof(EnvDTE.DTE)) as EnvDTE.DTE;
             var menuCommandService = await GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
 
             OptionsManager.Initialize(this);
 
-            commands = new Commands(this, menuCommandService);
+            monoExt = new MonoVSExtension(this, dte);
+            commands = new Commands(this, menuCommandService, monoExt);
         }
 
         #endregion
