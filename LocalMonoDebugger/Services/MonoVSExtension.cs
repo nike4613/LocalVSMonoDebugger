@@ -317,14 +317,10 @@ namespace LocalMonoDebugger.Services
                 fSendStdoutToOutputWindow = 0,
                 clsidCustom = DebugEngineGuids.EngineGuid,
                 //bstrEnv = "",
-                bstrOptions = debugOptions.SerializeToJson() // add debug engine options
+                bstrOptions = debugOptions.SerializeToJson(), // add debug engine options
+                bstrPortName = "Mono",
+                clsidPortSupplier = DebugEngineGuids.ProgramProviderGuid
             };
-
-            if (DebugEngineGuids.UseAD7Engine == EngineType.XamarinEngine)
-            {
-                info.bstrPortName = "Mono";
-                info.clsidPortSupplier = DebugEngineGuids.ProgramProviderGuid;
-            }
 
             info.cbSize = (uint)Marshal.SizeOf(info);
 
