@@ -64,11 +64,18 @@
               <CommandFlag>DefaultInvisible</CommandFlag>
               <CommandFlag>DynamicVisibility</CommandFlag>
           If you do not want an image next to your command, remove the Icon node /> -->
-      <Button guid="guidLocalMonoDebuggerPackageCmdSet" id="OpenDebugOptionId" priority="0x0100" type="Button">
+      <Button guid="guidLocalMonoDebuggerPackageCmdSet" id="OpenDebugOptionId" priority="0x0200" type="Button">
         <Parent guid="guidLocalMonoDebuggerPackageCmdSet" id="MonoDebugMenuGroup" />
         <Icon guid="guidImages" id="bmpPicSearch" />
         <Strings>
           <ButtonText>Options</ButtonText>
+        </Strings>
+      </Button>
+      <Button guid="guidLocalMonoDebuggerPackageCmdSet" id="AttachDebugger" priority="0x0100" type="Button">
+        <Parent guid="guidLocalMonoDebuggerPackageCmdSet" id="MonoDebugMenuGroup"/>
+        <Icon guid="guidImages" id="bmpPicX"/>
+        <Strings>
+          <ButtonText>Start Debugger</ButtonText>
         </Strings>
       </Button>
     </Buttons>
@@ -93,6 +100,7 @@
       <IDSymbol name="MonoDebugMenuGroup" value="0x1020" />
       <IDSymbol name="DebuggerMenu" value="0x1030"/>
       <IDSymbol name="OpenDebugOptionId" value="0x0100" />
+      <IDSymbol name="AttachDebugger" value="0x0200"/>
     </GuidSymbol>
 
     <GuidSymbol name="guidImages" value="{29a830c8-2084-4afc-8d23-b4e5522f7fee}" >

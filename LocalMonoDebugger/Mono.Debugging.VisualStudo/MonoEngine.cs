@@ -32,7 +32,7 @@ namespace Mono.Debugging.VisualStudio
             try
             {
                 NLogService.TraceEnteringMethod();
-                var debugOptions = DebugOptions.DeserializeFromJson(jsonDebugOptions);
+                var debugOptions = DebugOptions.DeserializeFromJson(jsonDebugOptions, null);
 
                 _session = new SoftDebuggerSession();
                 _session.TargetReady += (sender, eventArgs) =>
@@ -127,11 +127,14 @@ namespace Mono.Debugging.VisualStudio
 
         #region IDebugEngineLaunch2
 
-        public /*override*/ int LaunchSuspended(string pszServer, IDebugPort2 pPort, string pszExe, string pszArgs, string pszDir, string bstrEnv, string pszOptions, enum_LAUNCH_FLAGS dwLaunchFlags, uint hStdInput, uint hStdOutput, uint hStdError, IDebugEventCallback2 pCallback, out IDebugProcess2 ppProcess)
+        public /*override*/ int LaunchSuspended(string pszServer, IDebugPort2 pPort, string pszExe, string pszArgs, 
+            string pszDir, string bstrEnv, string pszOptions, enum_LAUNCH_FLAGS dwLaunchFlags, uint hStdInput, 
+            uint hStdOutput, uint hStdError, IDebugEventCallback2 pCallback, out IDebugProcess2 ppProcess)
         {
             NLogService.TraceEnteringMethod();
             var base64Options = SerializeDebuggerOptions(pszOptions);
-            var result = _engine.LaunchSuspended(pszServer, pPort, pszExe, pszArgs, pszDir, bstrEnv, base64Options, dwLaunchFlags, hStdInput, hStdOutput, hStdError, pCallback, out ppProcess);
+            var result = _engine.LaunchSuspended(pszServer, pPort, pszExe, pszArgs, pszDir, bstrEnv, base64Options,
+                dwLaunchFlags, hStdInput, hStdOutput, hStdError, pCallback, out ppProcess);
 
             return result;
         }

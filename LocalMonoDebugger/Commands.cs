@@ -17,6 +17,7 @@ namespace LocalMonoDebugger
             public const int DebugMenuGroup = 0x1020;
             public const int DebugMenu = 0x1030;
             public const int CmdOpenOptions = 0x0100;
+            public const int CmdAttachDebugger = 0x0200;
         }
         #endregion
 

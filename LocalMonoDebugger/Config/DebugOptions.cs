@@ -12,13 +12,16 @@ namespace LocalMonoDebugger.Config
     public class DebugOptions : BaseViewModel
     {
         private readonly OptionsContainer _container;
+        public DebugOptions() : this(null) { }
         internal DebugOptions(OptionsContainer container)
-        {
-            _container = container;
-        }
+            => _container = container;
 
-        public static DebugOptions DeserializeFromJson(string j)
-            => JsonConvert.DeserializeObject<DebugOptions>(j);
+        public static DebugOptions DeserializeFromJson(string j, OptionsContainer container)
+        {
+            var opts = new DebugOptions(container);
+            JsonConvert.PopulateObject(j, opts);
+            return opts;
+        }
         public string SerializeToJson()
             => JsonConvert.SerializeObject(this);
 
@@ -28,7 +31,7 @@ namespace LocalMonoDebugger.Config
             get => _appName;
             set 
             {
-                if (_container.Profiles.Any(p => p != this && p.AppName == value.Trim()))
+                if (_container?.Profiles.Any(p => p != this && p.AppName == value.Trim()) ?? false)
                     throw new InvalidOperationException("Another profile of the same name exists");
                 _appName = value.Trim();
                 NotifyPropertyChanged();

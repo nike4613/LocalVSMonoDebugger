@@ -26,7 +26,6 @@ namespace LocalMonoDebugger.Services
         public readonly static string VS_PROJECTKIND_SOLUTION_FOLDER = "{66A26720-8FB5-11D2-AA7E-00C04F688DDE}";
 
         private DTE _dte;
-        private CommandEvents _startCommandEvents;
         private readonly ErrorListProvider _errorListProvider;
         private static readonly Logger logger = LogManager.GetCurrentClassLogger();
 
@@ -34,27 +33,6 @@ namespace LocalMonoDebugger.Services
         {
             _dte = dte;
             _errorListProvider = new ErrorListProvider(package);
-        }
-
-        public async Task OverrideRunCommandAsync()
-        {
-            NLogService.TraceEnteringMethod();
-
-            await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync();
-
-            // https://stackoverflow.com/questions/15908652/how-to-programmatically-override-the-build-and-launch-actions
-            // https://visualstudioextensions.vlasovstudio.com/2017/06/29/changing-visual-studio-2017-private-registry-settings/
-            // https://github.com/3F/vsCommandEvent
-            var _dteEvents = _dte.Events;
-            _startCommandEvents = _dte.Events.CommandEvents["{5EFC7975-14BC-11CF-9B2B-00AA00573819}", 295];
-            _startCommandEvents.BeforeExecute += OnBeforeStartCommand;
-        }
-
-        private void OnBeforeStartCommand(string guid, int id, object customIn, object customOut, ref bool cancelDefault)
-        {
-            NLogService.TraceEnteringMethod();
-
-            //your event handler this command
         }
 
         public async Task BuildStartupProjectAsync()
@@ -318,16 +296,6 @@ namespace LocalMonoDebugger.Services
             }
         }
 
-        //public static string ComputeHash(string file)
-        //{
-        //    using (FileStream stream = File.OpenRead(file))
-        //    {
-        //        var sha = new SHA256Managed();
-        //        byte[] checksum = sha.ComputeHash(stream);
-        //        return BitConverter.ToString(checksum).Replace("-", string.Empty);
-        //    }
-        //}
-
         private IntPtr GetDebugInfo(DebugOptions debugOptions)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
@@ -342,7 +310,7 @@ namespace LocalMonoDebugger.Services
                 dlo = DEBUG_LAUNCH_OPERATION.DLO_CreateProcess,
                 bstrExe = targetExeFileName,
                 bstrCurDir = outputDirectory,
-                bstrArg = "",
+                bstrArg = GetStartArguments(),
                 bstrRemoteMachine = null, // debug locally                
                 grfLaunch = (uint)__VSDBGLAUNCHFLAGS.DBGLAUNCH_StopDebuggingOnEnd, // When this process ends, debugging is stopped.
                 //grfLaunch = (uint)__VSDBGLAUNCHFLAGS.DBGLAUNCH_DetachOnStop, // Detaches instead of terminating when debugging stopped.
@@ -473,7 +441,7 @@ namespace LocalMonoDebugger.Services
 
         private void LogInfo(string message)
         {
-            logger.Log(new LogEventInfo(LogLevel.Info, "MonoVisualStudioExtension", message));
+            logger.Log(new LogEventInfo(LogLevel.Info, "MonoDebuggerExtension", message));
 
         }
 

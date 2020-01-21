@@ -25,6 +25,12 @@ namespace LocalMonoDebugger.Config
             Validate(this);
         }
 
+        [JsonConstructor]
+        public OptionsContainer(ObservableCollection<DebugOptions> profiles)
+        {
+            Profiles = profiles;
+        }
+
         private string _selectedName;
         public string SelectedName
         {
