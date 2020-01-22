@@ -11,6 +11,7 @@
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -66,6 +67,7 @@
     <Compile Include="Engine.cs" />
     <Compile Include="EngineCreateEvent.cs" />
     <Compile Include="EngineEvent.cs" />
+    <Compile Include="EntryPointEvent.cs" />
     <Compile Include="EnvDTEProjectExtensions.cs" />
     <Compile Include="ErrorBreakpoint.cs" />
     <Compile Include="ErrorBreakpointResolution.cs" />
@@ -165,7 +167,7 @@
       <Version>2.0.8</Version>
     </PackageReference>
   </ItemGroup>
-  <Import Project="..\..\debugger-libs\Mono.Debugging.settings" />
+  <Import Project="..\..\Mono.Debugging.overrides" />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="ChangeAliasesOfStrongNameAssemblies" BeforeTargets="FindReferenceAssembliesForReferences;ResolveReferences">
     <ItemGroup>

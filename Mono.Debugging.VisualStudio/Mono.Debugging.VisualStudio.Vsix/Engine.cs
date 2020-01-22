@@ -192,6 +192,7 @@ namespace Mono.Debugging.VisualStudio
 				this.session = sessionMarshalling.Session;
 				startInfo = sessionMarshalling.StartInfo;
 			}
+
 			this.eventSender = new EventSender(pCallback, this);
 			Process process = new Process((Port)pPort, this, this.eventSender, this.session, startInfo, pszExe);
 			ppProcess = process;

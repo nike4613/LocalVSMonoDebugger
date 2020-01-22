@@ -58,6 +58,7 @@ namespace Mono.Debugging.VisualStudio
 			this.Breakpoints = new BreakpointsAdapter(this, eventSender, session);
 		}
 
+
 		// Token: 0x06000168 RID: 360 RVA: 0x00005CD4 File Offset: 0x00003ED4
 		private void OnTargetReady(object sender, TargetEventArgs args)
 		{
@@ -92,6 +93,7 @@ namespace Mono.Debugging.VisualStudio
 			}
 		}
 
+		private bool entryPointRan = false;
 		// Token: 0x0600016B RID: 363 RVA: 0x00005DA4 File Offset: 0x00003FA4
 		private void OnThreadStart(object sender, TargetEventArgs args)
 		{
@@ -99,6 +101,11 @@ namespace Mono.Debugging.VisualStudio
 			{
 				Thread thread = new Thread(this, args.Thread.Id, this.eventSender);
 				this.thread_hash.Add(args.Thread.Id, thread);
+				if (!entryPointRan)
+				{
+					eventSender.SendEvent(new EntryPointEvent(thread));
+					entryPointRan = true;
+				}
 				this.eventSender.SendEvent(new ThreadCreateEvent(thread));
 			}
 		}
@@ -192,7 +199,9 @@ namespace Mono.Debugging.VisualStudio
 		// Token: 0x06000174 RID: 372 RVA: 0x00004B88 File Offset: 0x00002D88
 		public int Detach()
 		{
-			throw new NotImplementedException();
+			//Session.Detach();
+			// we do nothing here because VS calls this immediately for some reason
+			return 0;
 		}
 
 		// Token: 0x06000175 RID: 373 RVA: 0x00004B88 File Offset: 0x00002D88

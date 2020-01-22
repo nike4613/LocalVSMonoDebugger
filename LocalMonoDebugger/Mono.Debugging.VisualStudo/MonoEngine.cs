@@ -136,6 +136,7 @@ namespace Mono.Debugging.VisualStudio
             var result = _engine.LaunchSuspended(pszServer, pPort, pszExe, pszArgs, pszDir, bstrEnv, base64Options,
                 dwLaunchFlags, hStdInput, hStdOutput, hStdError, pCallback, out ppProcess);
 
+            EnsureSessionStarted();
             return result;
         }
 
@@ -144,9 +145,23 @@ namespace Mono.Debugging.VisualStudio
             NLogService.TraceEnteringMethod();
         }
 
+        private void EnsureSessionStarted()
+        {
+            try
+            {
+                if (!_session.IsConnected)
+                    _session.Run(_startInfo, _startInfo.SessionOptions);
+            }
+            catch (Exception ex)
+            {
+                Debug.WriteLine(ex.Message + " - " + ex.StackTrace);
+            }
+        }
+
         public /*override*/ int ResumeProcess(IDebugProcess2 pProcess)
         {
             NLogService.TraceEnteringMethod();
+            EnsureSessionStarted();
             return _engine.ResumeProcess(pProcess);
         }
 
@@ -175,16 +190,7 @@ namespace Mono.Debugging.VisualStudio
         public /*override*/ int Attach(IDebugProgram2[] rgpPrograms, IDebugProgramNode2[] rgpProgramNodes, uint celtPrograms, IDebugEventCallback2 pCallback, enum_ATTACH_REASON dwReason)
         {
             NLogService.TraceEnteringMethod();
-
-            try
-            {
-                _session.Run(_startInfo, _startInfo.SessionOptions);
-            }
-            catch (Exception ex)
-            {
-                Debug.WriteLine(ex.Message + " - " + ex.StackTrace);
-            }
-
+            EnsureSessionStarted();
             return _engine.Attach(rgpPrograms, rgpProgramNodes, celtPrograms, pCallback, dwReason);
         }
 
